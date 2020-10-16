@@ -16,20 +16,34 @@ const AccountInfoTab = ({
   address,
   general,
   managingPartner,
+  onCompanyAddressChange,
+  onCompanyAddressSubmit,
+  onCompanyInfoChange,
+  onCompanyInfoSubmit,
   t,
 }) => (
   <div>
     <Card className={style.marginBottom}>
       <CardTitle title={t('pages.settings.user.account_info.general.title')} titleSize="large" />
       <CardContent>
-        <CompanyGeneralForm t={t} general={general} />
+        <CompanyGeneralForm
+          t={t}
+          general={general}
+          onCompanyInfoChange={onCompanyInfoChange}
+          onCompanyInfoSubmit={onCompanyInfoSubmit}
+        />
       </CardContent>
     </Card>
 
     <Card className={style.marginBottom}>
       <CardTitle title={t('pages.settings.user.account_info.address.title')} titleSize="large" />
       <CardContent>
-        <CompanyAddressForm t={t} address={address} />
+        <CompanyAddressForm
+          t={t}
+          address={address}
+          onCompanyAddressChange={onCompanyAddressChange}
+          onCompanyAddressSubmit={onCompanyAddressSubmit}
+        />
       </CardContent>
     </Card>
 
@@ -63,6 +77,10 @@ AccountInfoTab.propTypes = {
     email: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
+  onCompanyAddressChange: PropTypes.func.isRequired,
+  onCompanyAddressSubmit: PropTypes.func.isRequired,
+  onCompanyInfoChange: PropTypes.func.isRequired,
+  onCompanyInfoSubmit: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 

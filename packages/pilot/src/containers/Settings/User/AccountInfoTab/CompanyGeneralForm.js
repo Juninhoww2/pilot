@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
 import {
+  Button,
+  CardActions,
   Col,
   FormInput,
   Grid,
@@ -25,6 +27,8 @@ const formatInitialData = mapObjIndexed(replaceNilForString)
 
 const CompanyGeneralForm = ({
   general,
+  onCompanyInfoChange,
+  onCompanyInfoSubmit,
   t,
 }) => {
   const currentFormData = formatInitialData(general)
@@ -32,14 +36,13 @@ const CompanyGeneralForm = ({
   return (
     <Form
       data={currentFormData}
-      onSubmit={() => { }}
-      onChange={() => { }}
+      onSubmit={onCompanyInfoSubmit}
+      onChange={onCompanyInfoChange}
     >
       <Grid>
         <Row flex>
           <Col palm={12} tablet={6} desk={6} tv={4}>
             <FormInput
-              disabled
               label={t('pages.settings.user.account_info.general.form.name')}
               name="name"
               type="text"
@@ -71,6 +74,13 @@ const CompanyGeneralForm = ({
           </Col>
         </Row>
       </Grid>
+      <CardActions>
+        <Button
+          type="submit"
+        >
+          {t('pages.settings.user.account_info.general.confirm')}
+        </Button>
+      </CardActions>
     </Form>
   )
 }
@@ -82,6 +92,8 @@ CompanyGeneralForm.propTypes = {
     name: PropTypes.string,
     siteUrl: PropTypes.string,
   }).isRequired,
+  onCompanyInfoChange: PropTypes.func.isRequired,
+  onCompanyInfoSubmit: PropTypes.func.isRequired,
   t: PropTypes.func,
 }
 

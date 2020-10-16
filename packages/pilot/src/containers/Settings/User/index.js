@@ -46,6 +46,10 @@ const UserSettings = ({
   onBankAccountChange,
   onBankAccountCreate,
   onBankAccountSelect,
+  onCompanyAddressChange,
+  onCompanyAddressSubmit,
+  onCompanyInfoChange,
+  onCompanyInfoSubmit,
   passwordFormStatus,
   t,
   team,
@@ -83,6 +87,10 @@ const UserSettings = ({
           tabIndex === tabIndexByName.accountInfo
           && (
             <AccountInfoTab
+              onCompanyAddressChange={onCompanyAddressChange}
+              onCompanyInfoChange={onCompanyInfoChange}
+              onCompanyAddressSubmit={onCompanyAddressSubmit}
+              onCompanyInfoSubmit={onCompanyInfoSubmit}
               address={address}
               general={general}
               managingPartner={managingPartner}
@@ -228,6 +236,10 @@ UserSettings.propTypes = {
   onBankAccountChange: PropTypes.func.isRequired,
   onBankAccountCreate: PropTypes.func.isRequired,
   onBankAccountSelect: PropTypes.func.isRequired,
+  onCompanyAddressChange: PropTypes.func.isRequired,
+  onCompanyAddressSubmit: PropTypes.func.isRequired,
+  onCompanyInfoChange: PropTypes.func.isRequired,
+  onCompanyInfoSubmit: PropTypes.func.isRequired,
   passwordFormStatus: PropTypes.shape({
     error: PropTypes.string,
     success: PropTypes.bool,
