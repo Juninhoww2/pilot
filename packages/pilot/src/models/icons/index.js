@@ -13,6 +13,7 @@ import InternalError from './internal-error.svg'
 import MastercardIcon from './mastercard.svg'
 import NotFound from './not-found.svg'
 import OutrosIcon from './outros.svg'
+import PixIcon from './pix.svg'
 import Shield from './shield.svg'
 import Timeout from './timeout.svg'
 import VisaIcon from './visa.svg'
@@ -33,6 +34,7 @@ const icons = {
   no_acquirer: <NotFound />,
   none: <Alert />,
   others: <OutrosIcon />,
+  pix: <PixIcon />,
   unknown: <Card width={16} height={16} />,
   visa: <VisaIcon />,
 }
