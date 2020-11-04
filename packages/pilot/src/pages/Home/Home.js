@@ -433,6 +433,10 @@ const getConversions = uncurryN(2, t => pipe(
       t('pages.home.conversion.boleto'),
       ['boleto', 'conversion']
     ),
+    enhanceConversion(
+      t('pages.home.conversion.pix'),
+      ['pix', 'conversion']
+    ),
   ]),
   when(
     isNilOrEmpty,
