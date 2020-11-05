@@ -14,6 +14,10 @@ const StatusLegend = ({
     ? 'pages.recipients.status_acronym_of'
     : 'pages.recipients.status_of'
 
+  if (!item.status) {
+    return null
+  }
+
   return (
     <div className={style.centralizedItem}>
       <Legend
