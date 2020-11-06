@@ -1037,6 +1037,7 @@
         "card": "Cartão",
         "rates": "Índices de conversão",
         "real": "Real",
+        "pix": "Pix",
         "without_retries": "Sem retentativas"
       },
       "debit_card": "Cartão de débito",
@@ -1065,6 +1066,7 @@
       "on": "em",
       "others": "Outros",
       "payment_methods": "Formas de pagamento",
+      "pix": "Pix",
       "refusal_rate": "Motivos de recusa",
       "title": "Resumo",
       "total_amount_by_weekday": "Volume por dia da semana",
