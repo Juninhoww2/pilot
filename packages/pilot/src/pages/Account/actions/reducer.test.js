@@ -15,6 +15,10 @@ const companyFactory = mdrs => ({
           payment_spread_fee: 0,
         },
         minimum_monthly_payment: 0,
+        pix: {
+          payment_fixed_fee: 380,
+          payment_spread_fee: 1.19,
+        },
         transaction_cost: {
           boleto: 0,
           credit_card: 50,
@@ -67,6 +71,10 @@ describe('selectCompanyFees', () => {
           { installment: 2, mdr: 4.19 },
           { installment: 7, mdr: 4.59 },
         ],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
         transfer: 367,
       })
     })
@@ -88,6 +96,10 @@ describe('selectCompanyFees', () => {
         boleto: 380,
         gateway: 50,
         installments: [{ installment: 1, mdr: 3.79 }],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
         transfer: 367,
       })
     })
@@ -121,6 +133,10 @@ describe('selectCompanyFees', () => {
           { installment: 2, mdr: 4.19 },
           { installment: 7, mdr: 4.59 },
         ],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
         transfer: 367,
       })
     })
@@ -146,6 +162,10 @@ describe('selectCompanyFees', () => {
         boleto: 380,
         gateway: 50,
         installments: [],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
         transfer: 367,
       })
     })
@@ -179,6 +199,10 @@ describe('selectCompanyFees', () => {
         boleto: 380,
         gateway: 50,
         installments: [{ installment: 1, mdr: 4.99 }],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
         transfer: 367,
       })
     })
@@ -208,6 +232,10 @@ describe('selectCompanyFees', () => {
         boleto: 380,
         gateway: 50,
         installments: [{ installment: 1, mdr: 2 }],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
         transfer: 367,
       })
     })

@@ -19,6 +19,10 @@ const FeesDetailsDefaultExample = () => (
           { installment: 2, mdr: 2.3 },
           { installment: 7, mdr: 3 },
         ],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
         transfer: 187,
       }}
       t={t}
@@ -37,6 +41,10 @@ const FeesDetailsMDRzaoExample = () => (
         installments: [
           { installment: 1, mdr: 1.2 },
         ],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
         transfer: 187,
       }}
       isMDRzao

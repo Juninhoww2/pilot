@@ -8,6 +8,10 @@ const feesBase = {
   antifraud: 70,
   boleto: 380,
   gateway: 50,
+  pix: {
+    paymentFixedFee: 380,
+    paymentSpreadFee: 1.19,
+  },
   transfer: 367,
 }
 

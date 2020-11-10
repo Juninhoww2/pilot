@@ -18,9 +18,7 @@ exports[`render 1 installments with all fees and isMDRzao enabled 1`] = `
           </p>
           <p>
             <strong>
-              3,79%
-               
-              pages.empty_state.fees.per_transaction
+              3,79% pages.empty_state.fees.per_transaction
             </strong>
           </p>
         </div>
@@ -30,8 +28,7 @@ exports[`render 1 installments with all fees and isMDRzao enabled 1`] = `
           </p>
           <p>
             <strong>
-              R$ 0,50
-               
+              R$ 0,50 
             </strong>
           </p>
         </div>
@@ -41,8 +38,7 @@ exports[`render 1 installments with all fees and isMDRzao enabled 1`] = `
           </p>
           <p>
             <strong>
-              R$ 0,70
-               
+              R$ 0,70 
             </strong>
           </p>
         </div>
@@ -66,8 +62,7 @@ exports[`render 1 installments with all fees and isMDRzao enabled 1`] = `
             </p>
             <p>
               <strong>
-                R$ 3,80
-                 
+                R$ 3,80 
               </strong>
             </p>
           </div>
@@ -88,9 +83,7 @@ exports[`render 1 installments with all fees and isMDRzao enabled 1`] = `
             </p>
             <p>
               <strong>
-                3,14%
-                 
-                pages.empty_state.fees.per_installment
+                3,14% pages.empty_state.fees.per_installment
               </strong>
             </p>
           </div>
@@ -111,8 +104,32 @@ exports[`render 1 installments with all fees and isMDRzao enabled 1`] = `
             </p>
             <p>
               <strong>
-                R$ 3,67
-                 
+                R$ 3,67 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="marginRight"
+    >
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.pix
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.paid
+            </p>
+            <p>
+              <strong>
+                R$ 3,80 + 1,19% 
               </strong>
             </p>
           </div>
@@ -141,8 +158,7 @@ exports[`render 1, 2 and 7 installments with all fees 1`] = `
           </p>
           <p>
             <strong>
-              3,79%
-               
+              3,79% 
             </strong>
           </p>
         </div>
@@ -152,8 +168,7 @@ exports[`render 1, 2 and 7 installments with all fees 1`] = `
           </p>
           <p>
             <strong>
-              4,19%
-               
+              4,19% 
             </strong>
           </p>
         </div>
@@ -163,8 +178,7 @@ exports[`render 1, 2 and 7 installments with all fees 1`] = `
           </p>
           <p>
             <strong>
-              4,59%
-               
+              4,59% 
             </strong>
           </p>
         </div>
@@ -174,8 +188,7 @@ exports[`render 1, 2 and 7 installments with all fees 1`] = `
           </p>
           <p>
             <strong>
-              R$ 0,50
-               
+              R$ 0,50 
             </strong>
           </p>
         </div>
@@ -185,8 +198,7 @@ exports[`render 1, 2 and 7 installments with all fees 1`] = `
           </p>
           <p>
             <strong>
-              R$ 0,70
-               
+              R$ 0,70 
             </strong>
           </p>
         </div>
@@ -210,8 +222,7 @@ exports[`render 1, 2 and 7 installments with all fees 1`] = `
             </p>
             <p>
               <strong>
-                R$ 3,80
-                 
+                R$ 3,80 
               </strong>
             </p>
           </div>
@@ -232,9 +243,7 @@ exports[`render 1, 2 and 7 installments with all fees 1`] = `
             </p>
             <p>
               <strong>
-                3,14%
-                 
-                
+                3,14% 
               </strong>
             </p>
           </div>
@@ -255,8 +264,32 @@ exports[`render 1, 2 and 7 installments with all fees 1`] = `
             </p>
             <p>
               <strong>
-                R$ 3,67
-                 
+                R$ 3,67 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="marginRight"
+    >
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.pix
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.paid
+            </p>
+            <p>
+              <strong>
+                R$ 3,80 + 1,19% 
               </strong>
             </p>
           </div>
@@ -285,8 +318,7 @@ exports[`render no installments are provided 1`] = `
           </p>
           <p>
             <strong>
-              R$ 0,50
-               
+              R$ 0,50 
             </strong>
           </p>
         </div>
@@ -296,8 +328,7 @@ exports[`render no installments are provided 1`] = `
           </p>
           <p>
             <strong>
-              R$ 0,70
-               
+              R$ 0,70 
             </strong>
           </p>
         </div>
@@ -321,8 +352,7 @@ exports[`render no installments are provided 1`] = `
             </p>
             <p>
               <strong>
-                R$ 3,80
-                 
+                R$ 3,80 
               </strong>
             </p>
           </div>
@@ -343,9 +373,7 @@ exports[`render no installments are provided 1`] = `
             </p>
             <p>
               <strong>
-                3,14%
-                 
-                
+                3,14% 
               </strong>
             </p>
           </div>
@@ -366,8 +394,32 @@ exports[`render no installments are provided 1`] = `
             </p>
             <p>
               <strong>
-                R$ 3,67
-                 
+                R$ 3,67 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="marginRight"
+    >
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.pix
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.paid
+            </p>
+            <p>
+              <strong>
+                R$ 3,80 + 1,19% 
               </strong>
             </p>
           </div>
