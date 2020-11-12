@@ -30,7 +30,7 @@ const PaymentMethodToggle = ({
 
   return (
     <div className={styles.toggleRow}>
-      <Icon />
+      <Icon height="24px" width={null} />
       <span>{label}</span>
       <SegmentedSwitch
         className={styles.segmentedSwitch}

@@ -7,6 +7,7 @@ import {
 import Form from 'react-vanilla-form'
 import renderBoletoInput from './BoletoInput'
 import renderCreditCardInput from './CreditCardInput'
+import renderPixInput from './PixInput'
 import PaymentLinkActionsContainer from '../PaymentLinkActionsContainer'
 import {
   validateBoletoExpiresIn,
@@ -28,7 +29,9 @@ const SecondStep = ({
   const [isPaymentMethodEnabled, setIsPaymentMethodEnabled] = useState(true)
 
   const internalOnChange = (newData) => {
-    setIsPaymentMethodEnabled(newData.boleto || newData.credit_card)
+    setIsPaymentMethodEnabled(newData.boleto
+      || newData.credit_card
+      || newData.pix)
     onChange(newData)
   }
 
@@ -50,6 +53,7 @@ const SecondStep = ({
         <ModalContent>
           {renderBoletoInput(formData, t)}
           {renderCreditCardInput(formData, t, canChargeTransactionFee)}
+          {renderPixInput(formData, t)}
         </ModalContent>
         <PaymentLinkActionsContainer>
           <div className={styles.secondStepActions}>
