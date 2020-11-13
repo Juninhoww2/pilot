@@ -7,6 +7,7 @@ import {
 } from 'ramda'
 
 const isCreditCard = propEq('method', 'credit_card')
+const isPix = propEq('method', 'pix')
 
 const isIntlCreditCard = allPass([
   isCreditCard,
@@ -22,6 +23,7 @@ const formatPaymentMethod = cond([
   [isCreditCard, always('models.transaction.credit_card')],
   [isDebitCard, always('models.transaction.debit_card')],
   [isBoleto, always('models.transaction.boleto')],
+  [isPix, always('models.transaction.pix')],
   [T, always(null)],
 ])
 
