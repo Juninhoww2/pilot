@@ -32,6 +32,7 @@ const isChargebackCovered = (type, fraudReimbursed) => {
 const Events = ({
   boleto,
   color,
+  eventPaymentLabel,
   fraudReimbursed,
   id,
   operations,
@@ -49,6 +50,11 @@ const Events = ({
     const legendStatus = getOperationLegendStatus(operation)
     const number = operations.length - index
     const isFraudReimbursed = isChargebackCovered(type, fraudReimbursed)
+    const eventTitle = (
+      legendStatus.title === 'Emitido'
+        ? `${eventPaymentLabel.title} ${legendStatus.title}`
+        : legendStatus.title
+    )
 
     return (
       <Event
@@ -59,7 +65,7 @@ const Events = ({
         number={number}
         title={isFraudReimbursed
           ? t('fraud_reimbursed.title')
-          : legendStatus.title
+          : eventTitle
         }
       >
         <EventDetails
@@ -84,6 +90,9 @@ Events.propTypes = {
     url: PropTypes.string,
   }),
   color: PropTypes.string.isRequired,
+  eventPaymentLabel: PropTypes.shape({
+    title: PropTypes.string,
+  }).isRequired,
   fraudReimbursed: PropTypes.bool,
   id: PropTypes.number,
   operations: PropTypes.arrayOf(PropTypes.shape({

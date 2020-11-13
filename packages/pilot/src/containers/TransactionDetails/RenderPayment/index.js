@@ -4,15 +4,20 @@ import moment from 'moment-timezone'
 
 import RenderBoleto from '../RenderBoleto'
 import RenderPaymentCard from '../RenderPaymentCard'
+import RenderPix from '../RenderPix'
 
 const RenderPayment = ({
   boleto,
   card,
   onCopyBoletoUrl,
+  onCopyQrCodeUrl,
   onShowBoleto,
   payment,
   paymentBoletoLabels,
   paymentCardLabels,
+  paymentPixLabels,
+  pixExpirationDate,
+  pixQrCode,
 }) => {
   if (payment.method === 'boleto') {
     return (
@@ -24,6 +29,18 @@ const RenderPayment = ({
       />
     )
   }
+
+  if (payment.method === 'pix') {
+    return (
+      <RenderPix
+        onCopyQrCodeUrl={onCopyQrCodeUrl}
+        paymentPixLabels={paymentPixLabels}
+        pixExpirationDate={pixExpirationDate}
+        pixQrCode={pixQrCode}
+      />
+    )
+  }
+
   return (
     <RenderPaymentCard
       paymentCardLabels={paymentCardLabels}
@@ -44,6 +61,7 @@ RenderPayment.propTypes = {
     last_digits: PropTypes.string,
   }),
   onCopyBoletoUrl: PropTypes.func,
+  onCopyQrCodeUrl: PropTypes.func,
   onShowBoleto: PropTypes.func,
   payment: PropTypes.shape({
     method: PropTypes.string,
@@ -58,13 +76,23 @@ RenderPayment.propTypes = {
   paymentCardLabels: PropTypes.shape({
     title: PropTypes.string,
   }).isRequired,
+  paymentPixLabels: PropTypes.shape({
+    dueDate: PropTypes.string,
+    showQrcode: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+  pixExpirationDate: PropTypes.string,
+  pixQrCode: PropTypes.string,
 }
 
 RenderPayment.defaultProps = {
   boleto: null,
   card: null,
   onCopyBoletoUrl: null,
+  onCopyQrCodeUrl: null,
   onShowBoleto: null,
+  pixExpirationDate: '',
+  pixQrCode: 'www.pagar.me',
 }
 
 export default RenderPayment
