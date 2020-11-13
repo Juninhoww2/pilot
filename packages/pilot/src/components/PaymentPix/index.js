@@ -25,6 +25,11 @@ const PaymentCard = ({
   const [show, setShow] = useState(false)
 
   const handleShowQrCode = () => setShow(true)
+  const dueDateStyle = (
+    show
+      ? { position: 'relative', top: '-30px' }
+      : {}
+  )
 
   return (
     <Card className={style.card}>
@@ -36,7 +41,7 @@ const PaymentCard = ({
           <div className={style.pixQrCode}>
             <QRCode
               value={qrCodeUrl}
-              size={83}
+              size={128}
             />
           </div>
         )}
@@ -52,7 +57,10 @@ const PaymentCard = ({
             </button>
           )
         }
-        <div className={style.cardDueDate}>
+        <div
+          className={style.cardDueDate}
+          style={dueDateStyle}
+        >
           <p>{dueDateLabel} {dueDate}</p>
           <CopyButton
             feedbackText={copyQrCodeFeedback}

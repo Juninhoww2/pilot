@@ -65,7 +65,10 @@
 
 .pixQrCode {
   position: relative;
-  top: 3px;
+  top: -35px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 @media print {
