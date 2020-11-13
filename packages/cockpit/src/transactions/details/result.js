@@ -337,6 +337,8 @@ const mapRecipients = map(applySpec({
     ]),
     apply(subtract)
   ),
+  pix_expiration_date: prop('pix_expiration_date'),
+  pix_qr_code: prop('pix_qr_code'),
   percentage: pipe(prop('percentage'), String),
   split_rule_id: prop('id'),
   status: pipe(
