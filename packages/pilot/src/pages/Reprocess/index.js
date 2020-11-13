@@ -243,7 +243,7 @@ Reprocess.propTypes = {
   transaction: PropTypes.shape({
     amount: PropTypes.number,
     card: PropTypes.shape({
-      holder_name: PropTypes.string.isRequired,
+      holder_name: PropTypes.string,
     }),
     id: PropTypes.number,
   }).isRequired,
