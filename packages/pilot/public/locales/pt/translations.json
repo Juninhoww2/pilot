@@ -627,6 +627,7 @@
       "international_credit_card": "Cartão de crédito estrangeiro",
       "nsu": "NSU",
       "payment_method": "Forma de pagamento",
+      "pix": "Pix",
       "refuse_reason": "Motivo de recusa",
       "soft_descriptor": "Descrição na fatura",
       "status": "Status",
@@ -1608,6 +1609,10 @@
         "value": "Valor: ",
         "tid": "TID: "
       },
+      "event_labels": {
+        "boleto": "Boleto",
+        "pix": "Pix"
+      },
       "export": {
         "introduction": "Olá, {{company}}\n\nInformamos que a compra foi cancelada com sucesso conforme sua solicitação. Em caso de dúvida, por favor ligue para nossa equipe de relacionamento com o cliente.",
         "title": "Dados do estorno",
@@ -1673,6 +1678,12 @@
         "total_amount": "Valor total bruto (R$)",
         "total_recipient_plural": "{{count}} recebedores",
         "total_recipient": "{{count}} recebedor"
+      },
+      "pix": {
+        "due_date": "Vencimento:",
+        "feedback": "Copiado!",
+        "show_qr_code": "Ver código QR",
+        "title": "Pix"
       },
       "refuse_reason": "Motivo da recusa: ",
       "reprocess": {
