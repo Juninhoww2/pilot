@@ -14,23 +14,26 @@ const FeeTitleAndValues = ({ t, title, values }) => (
   <div>
     <p className={styles.title}>{title}</p>
     <Flexbox className={styles.feeValuesWrapper}>
-      {values.map(({
-        translationPath, type, value, valueSuffixPath,
-      }) => {
-        const formatter = formatterByType[type]
-        const formattedValue = formatter(value) || 'N/A'
+      {values.map(({ fees, translationPath }) => (
+        <div key={translationPath}>
+          <p>{t(translationPath)}</p>
+          <p>
+            <strong>
+              {
+                fees
+                  .map(({ type, value, valueSuffixPath }) => {
+                    const formatter = formatterByType[type]
+                    const formattedValue = formatter(value) || 'N/A'
+                    const valueSuffix = valueSuffixPath ? t(valueSuffixPath) : ''
 
-        return (
-          <div key={translationPath}>
-            <p>{t(translationPath)}</p>
-            <p>
-              <strong>
-                {formattedValue} {t(valueSuffixPath)}
-              </strong>
-            </p>
-          </div>
-        )
-      })}
+                    return `${formattedValue} ${valueSuffix}`
+                  })
+                  .join('+ ')
+              }
+            </strong>
+          </p>
+        </div>
+      ))}
     </Flexbox>
   </div>
 )
@@ -39,9 +42,12 @@ FeeTitleAndValues.propTypes = {
   t: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   values: PropTypes.arrayOf(PropTypes.shape({
+    fees: PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      value: PropTypes.number,
+      valueSuffixPath: PropTypes.string,
+    })),
     translationPath: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    value: PropTypes.number,
   })).isRequired,
 }
 

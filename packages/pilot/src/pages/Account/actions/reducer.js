@@ -161,6 +161,10 @@ const getFees = pipe(
       pathOr([], ['psp', 'live', 'mdrs']),
       getInstallments
     ),
+    pix: applySpec({
+      paymentFixedFee: path(['gateway', 'live', 'pix', 'payment_fixed_fee']),
+      paymentSpreadFee: path(['gateway', 'live', 'pix', 'payment_spread_fee']),
+    }),
     transfer: path(['transfers', 'ted']),
   })
 )

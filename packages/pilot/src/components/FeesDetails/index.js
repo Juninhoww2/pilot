@@ -19,9 +19,11 @@ const buildInstallmentsValues = (
   anticipationType,
   installments
 ) => installments.map(item => ({
+  fees: [{
+    type: 'percent',
+    value: item.mdr,
+  }],
   translationPath: installmentsTranslations[anticipationType][item.installment],
-  type: 'percent',
-  value: item.mdr,
 }))
 
 const loadFirstInstallmentMDR = (installments) => {
@@ -36,10 +38,12 @@ const buildCreditCardFees = ({ fees, isMDRzao }) => (
   isMDRzao
     ? [
       {
+        fees: [{
+          type: 'percent',
+          value: loadFirstInstallmentMDR(fees.installments),
+          valueSuffixPath: 'pages.empty_state.fees.per_transaction',
+        }],
         translationPath: 'pages.empty_state.fees.mdrzao_installment',
-        type: 'percent',
-        value: loadFirstInstallmentMDR(fees.installments),
-        valueSuffixPath: 'pages.empty_state.fees.per_transaction',
       },
     ]
     : [...buildInstallmentsValues('DEFAULT', fees.installments)])
@@ -47,18 +51,42 @@ const buildCreditCardFees = ({ fees, isMDRzao }) => (
 const buildProcessingFees = (fees) => {
   const processingFees = [
     {
+      fees: [{
+        type: 'currency',
+        value: fees.gateway,
+      }],
       translationPath: 'pages.empty_state.fees.processing',
-      type: 'currency',
-      value: fees.gateway,
     },
     {
+      fees: [{
+        type: 'currency',
+        value: fees.antifraud,
+      }],
       translationPath: 'pages.empty_state.fees.antifraud',
-      type: 'currency',
-      value: fees.antifraud,
     },
   ]
 
   return processingFees.filter(v => v.value !== 0)
+}
+
+export const buildPixValues = ({ pix }) => {
+  const fees = []
+
+  if (pix && pix.paymentFixedFee) {
+    fees.push({
+      type: 'currency',
+      value: pix.paymentFixedFee,
+    })
+  }
+
+  if (pix && pix.paymentSpreadFee) {
+    fees.push({
+      type: 'percent',
+      value: pix.paymentSpreadFee,
+    })
+  }
+
+  return fees
 }
 
 const FeesDetails = ({ fees, isMDRzao, t }) => {
@@ -78,9 +106,11 @@ const FeesDetails = ({ fees, isMDRzao, t }) => {
           title={t('pages.empty_state.fees.boleto')}
           values={[
             {
+              fees: [{
+                type: 'currency',
+                value: fees.boleto,
+              }],
               translationPath: 'pages.empty_state.fees.paid',
-              type: 'currency',
-              value: fees.boleto,
             },
           ]}
         />
@@ -89,10 +119,12 @@ const FeesDetails = ({ fees, isMDRzao, t }) => {
           title={t('pages.empty_state.fees.anticipation')}
           values={[
             {
+              fees: [{
+                type: 'percent',
+                value: fees.anticipation,
+                valueSuffixPath: isMDRzao ? 'pages.empty_state.fees.per_installment' : '',
+              }],
               translationPath: 'pages.empty_state.fees.tax',
-              type: 'percent',
-              value: fees.anticipation,
-              valueSuffixPath: isMDRzao ? 'pages.empty_state.fees.per_installment' : '',
             },
           ]}
         />
@@ -101,11 +133,23 @@ const FeesDetails = ({ fees, isMDRzao, t }) => {
           title={t('pages.empty_state.fees.transfers')}
           values={[
             {
+              fees: [{
+                type: 'currency',
+                value: fees.transfer,
+              }],
               translationPath: 'pages.empty_state.fees.doc_ted',
-              type: 'currency',
-              value: fees.transfer,
             },
           ]}
+        />
+      </Flexbox>
+      <Flexbox className={styles.marginRight}>
+        <FeeTitleAndValues
+          t={t}
+          title={t('pages.empty_state.fees.pix')}
+          values={[{
+            fees: buildPixValues(fees),
+            translationPath: 'pages.empty_state.fees.paid',
+          }]}
         />
       </Flexbox>
     </div>

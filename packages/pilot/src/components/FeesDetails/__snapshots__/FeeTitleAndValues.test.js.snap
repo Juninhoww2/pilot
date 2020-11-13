@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render pix payment fixed fee 1`] = `
+<div>
+  <div>
+    <p
+      class="title"
+    >
+      pages.empty_state.fees.paid
+    </p>
+    <div
+      class="feeValuesWrapper"
+    >
+      <div>
+        <p>
+          pages.empty_state.fees.pix
+        </p>
+        <p>
+          <strong>
+            R$ 3,80 
+          </strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render pix payment fixed fee and spread fees 1`] = `
+<div>
+  <div>
+    <p
+      class="title"
+    >
+      pages.empty_state.fees.paid
+    </p>
+    <div
+      class="feeValuesWrapper"
+    >
+      <div>
+        <p>
+          pages.empty_state.fees.pix
+        </p>
+        <p>
+          <strong>
+            R$ 3,80 + 1,19% 
+          </strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render pix payment spread fee 1`] = `
+<div>
+  <div>
+    <p
+      class="title"
+    >
+      pages.empty_state.fees.paid
+    </p>
+    <div
+      class="feeValuesWrapper"
+    >
+      <div>
+        <p>
+          pages.empty_state.fees.pix
+        </p>
+        <p>
+          <strong>
+            1,19% 
+          </strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
