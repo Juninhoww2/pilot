@@ -9,6 +9,7 @@ import { action } from '@storybook/addon-actions'
 import Section from '../../Section'
 import PaymentCard from '../../../src/components/PaymentCard'
 import PaymentBoleto from '../../../src/components/PaymentBoleto'
+import PaymentPix from '../../../src/components/PaymentPix'
 
 const copyToClipBoard = (text) => {
   const textarea = document.createElement('textarea')
@@ -49,6 +50,20 @@ const PaymentCards = () => (
             onShow={action('ver boleto')}
             showBoletoLabel="ver boleto"
             title="Boleto"
+          />
+        </Col>
+
+        <Col palm={12} tablet={6} desk={3}>
+          <PaymentPix
+            copyQrCodeFeedback="Copiado!"
+            copyQrCodeLabel="copiar"
+            dueDate="20/03/2018"
+            dueDateLabel="Vencimento:"
+            onCopy={copyToClipBoard}
+            onShow={action('ver boleto')}
+            qrCodeUrl="www.pagar.me"
+            showQrcode="Ver código QR"
+            title="Pix"
           />
         </Col>
       </Row>
