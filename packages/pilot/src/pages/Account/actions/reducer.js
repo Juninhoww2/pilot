@@ -27,6 +27,7 @@ import {
   LOGOUT_RECEIVE,
   RECIPIENT_RECEIVE,
   RECIPIENT_BALANCE_RECEIVE,
+  GET_ACQUIRERS_RESPONSE,
 } from './actions'
 
 const getBalance = applySpec({
@@ -120,6 +121,12 @@ export default function loginReducer (state = initialState, action) {
           },
         }
       )
+    }
+
+    case GET_ACQUIRERS_RESPONSE: {
+      return merge(state, {
+        acquirers: action.payload,
+      })
     }
 
     default:

@@ -484,6 +484,7 @@ storiesOf('Containers|Payment Links/List/PaymentLinkAdd', module)
   .add('AddModal', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkAddModal />)
   .add('FirstStep', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkFirstStep />)
   .add('SecondStep', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkSecondStep />)
+  .add('SecondStep: Pix enabled', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkSecondStepPixEnabled />)
   .add('SuccessStep', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkSuccessStep />)
   .add('ErrorStep', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkErrorStep />)
 

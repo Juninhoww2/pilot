@@ -29,3 +29,9 @@ export const receiveRecipientBalance = createAction(RECIPIENT_BALANCE_RECEIVE)
 
 export const FEE_PRESET_RECEIVE = 'pilot/account/FEE_PRESET_RECEIVE'
 export const receiveFeePreset = createAction(FEE_PRESET_RECEIVE)
+
+export const GET_ACQUIRERS_REQUEST = 'pilot/payment_links/list/GET_ACQUIRERS_REQUEST'
+export const getAcquirersRequest = createAction(GET_ACQUIRERS_REQUEST)
+
+export const GET_ACQUIRERS_RESPONSE = 'pilot/payment_links/list/GET_ACQUIRERS_RESPONSE'
+export const getAcquirersResponse = createAction(GET_ACQUIRERS_RESPONSE)

@@ -1797,7 +1797,9 @@
           "is_integer_error": "Este campo precisa ser um número inteiro",
           "is_number_error": "Este campo precisa ser um número",
           "min_value_error": "O valor mínimo é {{value}}",
-          "max_value_error": "O valor máximo é {{value}}"
+          "max_value_error": "O valor máximo é {{value}}",
+          "pix": "Pix",
+          "pix_info": "Ative o recebimento por PIX para receber transações por essa modalidade."
         },
         "success": {
           "title": "Link criado com sucesso!",

@@ -35,6 +35,7 @@ const PaymentLinkAdd = ({
   formData,
   handleFormChange,
   isOpen,
+  isPixEnabled,
   loading,
   onClose,
   onCreateAnotherLink,
@@ -53,47 +54,48 @@ const PaymentLinkAdd = ({
       onClose={() => !loading && onClose()}
     />
     {
-          step.name === 'first_step' && (
-          <FirstStep
-            formData={formData}
-            onChange={handleFormChange}
-            onSubmit={onNextStep}
-            t={t}
-            renderBulletSteps={renderBulletSteps}
-          />
-          )
-      }
+      step.name === 'first_step' && (
+        <FirstStep
+          formData={formData}
+          onChange={handleFormChange}
+          onSubmit={onNextStep}
+          t={t}
+          renderBulletSteps={renderBulletSteps}
+        />
+      )
+    }
     {
-        step.name === 'second_step' && (
-          <SecondStep
-            canChargeTransactionFee={canChargeTransactionFee}
-            formData={formData}
-            loading={loading}
-            onBack={onPreviousStep}
-            onChange={handleFormChange}
-            onSubmit={onCreateLinkRequest}
-            t={t}
-            renderBulletSteps={renderBulletSteps}
-          />
-        )
-      }
+      step.name === 'second_step' && (
+        <SecondStep
+          canChargeTransactionFee={canChargeTransactionFee}
+          formData={formData}
+          isPixEnabled={isPixEnabled}
+          loading={loading}
+          onBack={onPreviousStep}
+          onChange={handleFormChange}
+          onSubmit={onCreateLinkRequest}
+          t={t}
+          renderBulletSteps={renderBulletSteps}
+        />
+      )
+    }
     {
-        step.name === 'success_step' && (
-          <SuccessStep
-            onCreateAnotherLink={onCreateAnotherLink}
-            paymentLink={paymentLink}
-            t={t}
-          />
-        )
-      }
+      step.name === 'success_step' && (
+        <SuccessStep
+          onCreateAnotherLink={onCreateAnotherLink}
+          paymentLink={paymentLink}
+          t={t}
+        />
+      )
+    }
     {
-        step.name === 'error_step' && (
-          <ErrorStep
-            onCreateAnotherLink={onCreateAnotherLink}
-            t={t}
-          />
-        )
-      }
+      step.name === 'error_step' && (
+        <ErrorStep
+          onCreateAnotherLink={onCreateAnotherLink}
+          t={t}
+        />
+      )
+    }
   </Modal>
 )
 
@@ -112,6 +114,7 @@ PaymentLinkAdd.propTypes = {
   }).isRequired,
   handleFormChange: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  isPixEnabled: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   onClose: PropTypes.func,
   onCreateAnotherLink: PropTypes.func,
@@ -127,9 +130,9 @@ PaymentLinkAdd.propTypes = {
 }
 
 PaymentLinkAdd.defaultProps = {
-  onClose: () => {},
-  onCreateAnotherLink: () => {},
-  onCreateLinkRequest: () => {},
+  onClose: () => { },
+  onCreateAnotherLink: () => { },
+  onCreateLinkRequest: () => { },
   paymentLink: '',
 }
 
