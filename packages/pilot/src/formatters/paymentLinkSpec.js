@@ -58,16 +58,20 @@ const checkChargeTransactionFeeAndSetInterestRate = (object) => {
   return parseIntValue('interest_rate', object) || 0
 }
 
+const paymentMethod = ifElse(
+  propEq('credit_card', true),
+  always('credit_card'),
+  ifElse(
+    propEq('pix', true),
+    always('pix'),
+    always('boleto')
+  )
+)
+
 const buildBoleto = applySpec({
   enabled: prop('boleto'),
   expires_in: parseIntValue('boleto_expires_in'),
 })
-
-const paymentMethod = ifElse(
-  propEq('credit_card', true),
-  always('credit_card'),
-  always('boleto')
-)
 
 const paymentConfigBoleto = ifElse(
   propEq('boleto', true),
@@ -92,21 +96,56 @@ const paymentConfigCreditCard = ifElse(
   always(null)
 )
 
+const pixExpirationDate = ({
+  expiration_amount: expirationAmount,
+  expiration_unit: expirationUnit,
+}) => {
+  if (!expirationAmount) {
+    return moment().add(1, 'year').toISOString()
+  }
+
+  return moment().add(
+    parseInt(expirationAmount, 10),
+    expirationUnit
+  ).add(1, 'minute').toISOString()
+}
+
+const buildPix = applySpec({
+  enabled: prop('pix'),
+  expiration_date: pixExpirationDate,
+})
+
+const paymentConfigPix = ifElse(
+  propEq('pix', true),
+  buildPix,
+  always(null)
+)
+
 const paymentConfig = applySpec({
   boleto: paymentConfigBoleto,
   credit_card: paymentConfigCreditCard,
   default_payment_method: paymentMethod,
+  pix: paymentConfigPix,
 })
 
-const omitBoletoOrCreditCard = (values) => {
+const omitBoletoCreditCardOrPix = (values) => {
   const payload = values
+  const props = []
 
   if (!values.boleto) {
-    return omit(['boleto'], payload)
+    props.push('boleto')
   }
 
   if (!values.credit_card) {
-    return omit(['credit_card'], payload)
+    props.push('credit_card')
+  }
+
+  if (!values.pix) {
+    props.push('pix')
+  }
+
+  if (props.length > 0) {
+    return omit(props, payload)
   }
 
   return payload
@@ -127,5 +166,5 @@ export default applySpec({
   expires_in: expiresIn,
   items: buildItems,
   name: prop('name'),
-  payment_config: pipe(paymentConfig, omitBoletoOrCreditCard),
+  payment_config: pipe(paymentConfig, omitBoletoCreditCardOrPix),
 })
