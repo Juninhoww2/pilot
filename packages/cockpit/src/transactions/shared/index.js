@@ -289,6 +289,8 @@ const transactionSpec = {
     paid_amount: prop('paid_amount'),
     refund_amount: prop('refunded_amount'),
   },
+  pix_expiration_date: prop('pix_expiration_date'),
+  pix_qr_code: prop('pix_qr_code'),
   postback_url: ifElse(
     propSatisfies(either(isNil, isEmpty), 'postback_url'),
     always(null),

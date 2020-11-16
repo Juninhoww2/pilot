@@ -390,17 +390,20 @@ class TransactionDetails extends Component {
       alertLabels,
       boletoWarningMessage,
       customerLabels,
+      eventPaymentLabel,
       expandRecipients,
       headerLabels,
       installmentColumns,
       metadataTitle,
       nextTransactionId,
       onCopyBoletoUrl,
+      onCopyQrCodeUrl,
       onNextTransactionRedirect,
       onPreviousTransactionRedirect,
       onShowBoleto,
       paymentBoletoLabels,
       paymentCardLabels,
+      paymentPixLabels,
       recipientsLabels,
       reprocessLabels,
       t,
@@ -420,6 +423,8 @@ class TransactionDetails extends Component {
       metadata,
       operations,
       payment,
+      pix_expiration_date,
+      pix_qr_code,
       recipients,
       risk_level,
       soft_descriptor,
@@ -545,10 +550,14 @@ class TransactionDetails extends Component {
               boleto={boleto}
               card={card}
               onCopyBoletoUrl={onCopyBoletoUrl}
+              onCopyQrCodeUrl={onCopyQrCodeUrl}
               onShowBoleto={onShowBoleto}
               payment={payment}
               paymentBoletoLabels={paymentBoletoLabels}
               paymentCardLabels={paymentCardLabels}
+              paymentPixLabels={paymentPixLabels}
+              pixQrCode={pix_qr_code}
+              pixExpirationDate={pix_expiration_date}
             />
           </Col>
           <Col
@@ -782,6 +791,7 @@ class TransactionDetails extends Component {
                 <Events
                   boleto={boleto}
                   color={statusLegends[status].color}
+                  eventPaymentLabel={eventPaymentLabel}
                   fraudReimbursed={status === 'fraud_reimbursed'}
                   t={t}
                   id={id}
@@ -830,6 +840,9 @@ TransactionDetails.propTypes = {
     title: PropTypes.string,
     zip_code: PropTypes.string,
   }).isRequired,
+  eventPaymentLabel: PropTypes.shape({
+    title: PropTypes.string,
+  }).isRequired,
   expandRecipients: PropTypes.bool,
   handleRefundReceiptDownload: PropTypes.func,
   headerLabels: PropTypes.shape({
@@ -857,6 +870,7 @@ TransactionDetails.propTypes = {
   nextTransactionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onCapture: validateCaptureFunction,
   onCopyBoletoUrl: PropTypes.func,
+  onCopyQrCodeUrl: PropTypes.func,
   onDismissAlert: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onExport: PropTypes.func,
   onManualReviewApprove: PropTypes.func,
@@ -874,6 +888,11 @@ TransactionDetails.propTypes = {
     title: PropTypes.string,
   }).isRequired,
   paymentCardLabels: PropTypes.shape({
+    title: PropTypes.string,
+  }).isRequired,
+  paymentPixLabels: PropTypes.shape({
+    dueDate: PropTypes.string,
+    showQrcode: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
   permissions: PropTypes.shape({
@@ -1027,6 +1046,7 @@ TransactionDetails.defaultProps = {
   nextTransactionId: null,
   onCapture: null,
   onCopyBoletoUrl: null,
+  onCopyQrCodeUrl: null,
   onDismissAlert: null,
   onExport: null,
   onManualReviewApprove: null,

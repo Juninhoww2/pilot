@@ -226,7 +226,7 @@ ReprocessForm.propTypes = {
   allowReprocessWithoutAntifraud: PropTypes.bool.isRequired,
   amount: PropTypes.number.isRequired,
   disableWithoutAntifraudReprocess: PropTypes.bool,
-  holderName: PropTypes.string.isRequired,
+  holderName: PropTypes.string,
   loading: PropTypes.bool,
   lockReason: lockReasonValidation,
   maxChargebackRate: PropTypes.number.isRequired,
@@ -238,6 +238,7 @@ ReprocessForm.propTypes = {
 
 ReprocessForm.defaultProps = {
   disableWithoutAntifraudReprocess: false,
+  holderName: '',
   loading: false,
   lockReason: null,
 }

@@ -21,6 +21,7 @@
     "pagarme": "4.13.0",
     "pdfmake": "0.1.68",
     "prop-types": "15.6.2",
+    "qrcode.react": "1.0.0",
     "qs": "6.5.1",
     "ramda": "0.26.1",
     "react": "16.8.6",

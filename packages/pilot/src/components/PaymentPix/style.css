@@ -1,0 +1,113 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.card {
+  height: 150px;
+
+  & h2 {
+    color: var(--color-birdperson-gray-500);
+    font-size: 14px;
+    margin: 0;
+  }
+
+  & p {
+    margin: 0;
+  }
+}
+
+.cardDueDate {
+  align-items: center;
+  display: flex;
+  height: 26px;
+  justify-content: space-between;
+  width: 100%;
+
+  & p {
+    color: var(--color-squanchy-gray-400);
+    font-size: 12px;
+  }
+}
+
+.cardQrcode {
+  padding-top: 35px;
+  padding-bottom: 27px;
+  color: var(--color-picklerick-green-100);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+  line-height: var(--spacing-medium);
+
+  & svg {
+    margin-right: var(--spacing-tiny);
+    position: relative;
+    top: 4px;
+  }
+}
+
+.cardContent {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & div:first-child {
+    padding: 0;
+  }
+}
+
+.cardTitle {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pixQrCode {
+  position: relative;
+  top: -35px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+@media print {
+
+  .card {
+    background: none;
+    height: auto;
+  }
+
+  .cardContent {
+    align-items: baseline;
+    border-bottom: 1px solid var(--color-squanchy-gray-50);
+    flex-flow: row wrap;
+    height: auto;
+    padding: 0 0 10px;
+
+    &:before {
+      content: "Dado do cartão";
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+  }
+
+  .cardTitle {
+    display: none;
+  }
+
+  .cardQrcode {
+    color: var(--color-birdperson-gray-500);
+    font-size: 14px;
+    line-height: var(--spacing-medium);
+
+    & svg {
+      margin-right: var(--spacing-tiny);
+      position: relative;
+      top: 8px;
+    }
+  }
+}

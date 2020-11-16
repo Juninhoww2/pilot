@@ -114,7 +114,7 @@ const types = {
         title: 'Conciliação',
       },
       success: {
-        title: 'Boleto Pago',
+        title: 'Pago',
       },
     },
   },
@@ -133,7 +133,7 @@ const types = {
         title: 'Emissão',
       },
       success: {
-        title: 'Boleto Emitido',
+        title: 'Emitido',
       },
     },
   },

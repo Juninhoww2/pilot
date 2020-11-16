@@ -20,6 +20,7 @@ import {
   length,
   path,
   pathEq,
+  pathOr,
   pipe,
   prop,
   tail,
@@ -166,6 +167,25 @@ const getPaymentBoletoLabels = (t, transaction) => ({
   title: t('pages.transaction.boleto.title'),
 })
 
+const getPaymentPixLabels = t => ({
+  copy: t('pages.transaction.copy'),
+  dueDateLabel: t('pages.transaction.pix.due_date'),
+  feedback: t('pages.transaction.pix.feedback'),
+  showQrcode: t('pages.transaction.pix.show_qr_code'),
+  title: t('pages.transaction.pix.title'),
+})
+
+const getEventPaymentLabels = t => (transaction) => {
+  const paymentMethod = pathOr('', ['payment', 'method'], transaction)
+  const label = (
+    paymentMethod
+      ? t(`pages.transaction.event_labels.${paymentMethod}`)
+      : ''
+  )
+
+  return ({ title: label })
+}
+
 const getPaymentCardLabels = t => ({
   title: t('pages.transaction.credit_card'),
 })
@@ -256,6 +276,7 @@ class TransactionDetails extends Component {
     this.state = {
       actionLabels: getActionLabels(t),
       chargebackRate: 0,
+      eventPaymentLabel: { title: '' },
       expandRecipients: false,
       installmentColumns: formatColumns(installmentTableColumns),
       loading: {
@@ -265,6 +286,7 @@ class TransactionDetails extends Component {
       maxChargebackRate: 2,
       paymentBoletoLabels: getPaymentBoletoLabels(t),
       paymentCardLabels: getPaymentCardLabels(t),
+      paymentPixLabels: getPaymentPixLabels(t),
       result: {
         transaction: {},
       },
@@ -286,7 +308,7 @@ class TransactionDetails extends Component {
     this.handleCloseManualReview = this.handleCloseManualReview.bind(this)
     this.handleCloseRefund = this.handleCloseRefund.bind(this)
     this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
-    this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
+    this.handleCopyQrCodeUrlClick = this.handleCopyQrCodeUrlClick.bind(this)
     this.handleManualReviewApprove = this.handleManualReviewApprove.bind(this)
     this.handleManualReviewRefuse = this.handleManualReviewRefuse.bind(this)
     this.handleNextTransactionRedirect = this
@@ -403,6 +425,7 @@ class TransactionDetails extends Component {
 
         const newState = {
           chargebackRate,
+          eventPaymentLabel: getEventPaymentLabels(t)(result.transaction),
           maxChargebackRate,
           paymentBoletoLabels: getPaymentBoletoLabels(t, result.transaction),
           result,
@@ -435,6 +458,15 @@ class TransactionDetails extends Component {
       },
     } = this.state
     copyToClipBoard(boleto.barcode)
+  }
+
+  handleCopyQrCodeUrlClick () {
+    const {
+      result: {
+        transaction,
+      },
+    } = this.state
+    copyToClipBoard(transaction.pix_qr_code)
   }
 
   handleManualReviewApprove () {
@@ -558,6 +590,7 @@ class TransactionDetails extends Component {
     const {
       actionLabels,
       chargebackRate,
+      eventPaymentLabel,
       expandRecipients,
       installmentColumns,
       loading,
@@ -565,6 +598,7 @@ class TransactionDetails extends Component {
       maxChargebackRate,
       paymentBoletoLabels,
       paymentCardLabels,
+      paymentPixLabels,
       result,
       riskLevelsLabels,
       showCapture,
@@ -700,6 +734,7 @@ class TransactionDetails extends Component {
           alertLabels={alertLabels}
           boletoWarningMessage={t('pages.transaction.boleto.waiting_payment_warning')}
           customerLabels={customerLabels}
+          eventPaymentLabel={eventPaymentLabel}
           expandRecipients={expandRecipients}
           headerLabels={headerLabels}
           handleRefundReceiptDownload={this.handleRefundReceiptDownload}
@@ -709,6 +744,7 @@ class TransactionDetails extends Component {
           nextTransactionId={nextTransactionId}
           onCapture={this.handleCapture}
           onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
+          onCopyQrCodeUrl={this.handleCopyQrCodeUrlClick}
           onDismissAlert={this.handleAlertDismiss}
           onManualReviewApprove={this.handleManualReviewApprove}
           onManualReviewRefuse={this.handleManualReviewRefuse}
@@ -720,6 +756,7 @@ class TransactionDetails extends Component {
           onShowBoleto={this.handleShowBoletoClick}
           paymentBoletoLabels={paymentBoletoLabels}
           paymentCardLabels={paymentCardLabels}
+          paymentPixLabels={paymentPixLabels}
           permissions={{
             capture: permission !== 'read_only',
             manualReview: permission !== 'read_only',
