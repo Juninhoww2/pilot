@@ -34,6 +34,8 @@ import {
   receiveRecipientBalance,
   receiveRecipient,
   receiveFeePreset,
+  GET_ACQUIRERS_REQUEST,
+  getAcquirersResponse,
 } from './actions'
 
 import store from '../../../configureStore'
@@ -346,9 +348,22 @@ const logoutEpic = (action$, state$) => action$.pipe(
   map(receiveLogout)
 )
 
+const getAcquirersEpic = (action$, state$) => action$
+  .pipe(
+    ofType(GET_ACQUIRERS_REQUEST),
+    mergeMap(() => {
+      const state = state$.value
+      const { account: { client } } = state
+
+      return client.acquirers.all()
+        .then(getAcquirersResponse)
+    })
+  )
+
 export default combineEpics(
   loginEpic,
   accountEpic,
+  getAcquirersEpic,
   companyEpic,
   feePresetEpic,
   recipientEpic,

@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { compose, curry, nth } from 'ramda'
+import {
+  compose,
+  contains,
+  curry,
+  find,
+  nth,
+  pipe,
+  propOr,
+} from 'ramda'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import moment from 'moment'
@@ -17,6 +25,9 @@ import {
   resetStepsRequest as resetStepsRequestAction,
   getLinksRequest as getLinksRequestAction,
 } from './actions'
+import {
+  getAcquirersRequest as getAcquirersRequestAction,
+} from '../../Account/actions/actions'
 import {
   NewLinksCard,
   PaymentLinkAdd,
@@ -36,6 +47,7 @@ const defaultColumnSize = {
 
 const mapStateToProps = ({
   account: {
+    acquirers,
     company,
     user: {
       permission,
@@ -51,6 +63,7 @@ const mapStateToProps = ({
     totalPaymentLinks,
   },
 }) => ({
+  acquirers,
   company,
   filter,
   loadingCreateLink,
@@ -64,6 +77,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   createLinkRequest: createLinkRequestAction,
+  getAcquirersRequest: getAcquirersRequestAction,
   getLinksRequest: getLinksRequestAction,
   nextStepRequest: nextStepRequestAction,
   previousStepRequest: previousStepRequestAction,
@@ -95,6 +109,7 @@ const creditCardInputDefaultValues = {
 const makeDefaulLinkData = () => ({
   boleto: true,
   credit_card: true,
+  pix: false,
   ...firstStepDefaultData,
   ...boletoInputDefaultValues,
   ...creditCardInputDefaultValues,
@@ -134,9 +149,11 @@ const initialQueryData = {
 }
 
 const List = ({
+  acquirers,
   company,
   createLinkRequest,
   filter,
+  getAcquirersRequest,
   getLinksRequest,
   history,
   loadingCreateLink,
@@ -153,13 +170,31 @@ const List = ({
 }) => {
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
+  const [isPixEnabled, setIsPixEnabled] = useState(false)
   const [query, setQuery] = useState(initialQueryData)
 
   const chargeTransactionFee = canChargeTransactionFee(company)
 
   useEffect(() => {
     getLinksRequest({ ...filter, ...initialQueryData })
+    getAcquirersRequest()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const pixEnabled = !!find(
+      pipe(
+        propOr([], 'payment_methods'),
+        contains('pix')
+      )
+    )(acquirers)
+
+    setIsPixEnabled(pixEnabled)
+
+    setLinkFormData({
+      ...linkFormData,
+      pix: pixEnabled,
+    })
+  }, [acquirers]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const onQueryChange = curry((propName, value) => setQuery({
     ...query,
@@ -270,6 +305,7 @@ const List = ({
         paymentLink={paymentLinkUrl}
         step={steps[step]}
         userPermission={userPermission}
+        isPixEnabled={isPixEnabled}
         t={t}
       />
       <Grid>
@@ -315,6 +351,7 @@ const List = ({
 }
 
 List.propTypes = {
+  acquirers: PropTypes.arrayOf(PropTypes.shape()),
   company: PropTypes.shape({
     capabilities: PropTypes.shape({
       allow_transaction_anticipation: PropTypes.bool,
@@ -330,6 +367,7 @@ List.propTypes = {
     sortField: PropTypes.string,
     sortOrder: PropTypes.string,
   }).isRequired,
+  getAcquirersRequest: PropTypes.func.isRequired,
   getLinksRequest: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -348,6 +386,7 @@ List.propTypes = {
 }
 
 List.defaultProps = {
+  acquirers: [],
   paymentLinks: [],
   paymentLinkUrl: '',
   totalPaymentLinks: null,

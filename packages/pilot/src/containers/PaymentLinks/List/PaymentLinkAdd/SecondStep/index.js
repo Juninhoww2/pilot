@@ -7,6 +7,7 @@ import {
 import Form from 'react-vanilla-form'
 import renderBoletoInput from './BoletoInput'
 import renderCreditCardInput from './CreditCardInput'
+import renderPixInput from './PixInput'
 import PaymentLinkActionsContainer from '../PaymentLinkActionsContainer'
 import {
   validateBoletoExpiresIn,
@@ -18,6 +19,7 @@ import styles from './style.css'
 const SecondStep = ({
   canChargeTransactionFee,
   formData,
+  isPixEnabled,
   loading,
   onBack,
   onChange,
@@ -28,7 +30,9 @@ const SecondStep = ({
   const [isPaymentMethodEnabled, setIsPaymentMethodEnabled] = useState(true)
 
   const internalOnChange = (newData) => {
-    setIsPaymentMethodEnabled(newData.boleto || newData.credit_card)
+    setIsPaymentMethodEnabled(newData.boleto
+      || newData.credit_card
+      || newData.pix)
     onChange(newData)
   }
 
@@ -50,6 +54,7 @@ const SecondStep = ({
         <ModalContent>
           {renderBoletoInput(formData, t)}
           {renderCreditCardInput(formData, t, canChargeTransactionFee)}
+          {isPixEnabled && renderPixInput(formData, t)}
         </ModalContent>
         <PaymentLinkActionsContainer>
           <div className={styles.secondStepActions}>
@@ -81,6 +86,7 @@ SecondStep.propTypes = {
     interest_rate: PropTypes.string,
     max_installments: PropTypes.string,
   }).isRequired,
+  isPixEnabled: PropTypes.bool.isRequired,
   loading: PropTypes.bool,
   onBack: PropTypes.func,
   onChange: PropTypes.func,

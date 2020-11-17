@@ -95,6 +95,15 @@ const PaymentLinkSecondStepExample = () => (
   />
 )
 
+const PaymentLinkSecondStepPixEnabledExample = () => (
+  <PaymentLinkAdd
+    {...baseProps}
+    canChargeTransactionFee={boolean('canChargeTransactionFee')}
+    isPixEnabled
+    step={steps.second_step}
+  />
+)
+
 const PaymentLinkSuccessStepExample = () => (
   <PaymentLinkAdd {...baseProps} step={steps.success_step} />
 )
@@ -108,5 +117,6 @@ export default {
   PaymentLinkErrorStep: PaymentLinkErrorStepExample,
   PaymentLinkFirstStep: PaymentLinkFirstStepExample,
   PaymentLinkSecondStep: PaymentLinkSecondStepExample,
+  PaymentLinkSecondStepPixEnabled: PaymentLinkSecondStepPixEnabledExample,
   PaymentLinkSuccessStep: PaymentLinkSuccessStepExample,
 }
