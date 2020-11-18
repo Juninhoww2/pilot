@@ -89,7 +89,12 @@ export const buildPixValues = ({ pix }) => {
   return fees
 }
 
-const FeesDetails = ({ fees, isMDRzao, t }) => {
+const FeesDetails = ({
+  fees,
+  isMDRzao,
+  isPixEnabled,
+  t,
+}) => {
   const creditCardFees = buildCreditCardFees({ fees, isMDRzao })
   const processingFees = buildProcessingFees(fees)
 
@@ -142,16 +147,18 @@ const FeesDetails = ({ fees, isMDRzao, t }) => {
           ]}
         />
       </Flexbox>
-      <Flexbox className={styles.marginRight}>
-        <FeeTitleAndValues
-          t={t}
-          title={t('pages.empty_state.fees.pix')}
-          values={[{
-            fees: buildPixValues(fees),
-            translationPath: 'pages.empty_state.fees.paid',
-          }]}
-        />
-      </Flexbox>
+      {isPixEnabled && (
+        <Flexbox className={styles.marginRight}>
+          <FeeTitleAndValues
+            t={t}
+            title={t('pages.empty_state.fees.pix')}
+            values={[{
+              fees: buildPixValues(fees),
+              translationPath: 'pages.empty_state.fees.paid',
+            }]}
+          />
+        </Flexbox>
+      )}
     </div>
   )
 }
@@ -169,6 +176,7 @@ FeesDetails.propTypes = {
     transfer: PropTypes.number,
   }),
   isMDRzao: PropTypes.bool,
+  isPixEnabled: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 }
 

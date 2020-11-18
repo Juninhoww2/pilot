@@ -29,7 +29,7 @@ test('render 1, 2 and 7 installments with all fees', () => {
     container,
     getByText,
     queryByText,
-  } = render(<FeesDetails fees={fees} t={identity} />)
+  } = render(<FeesDetails fees={fees} t={identity} isPixEnabled />)
 
   getByText(/fees.one_installment/)
   getByText(/fees.two_to_six_installments/)
@@ -49,7 +49,7 @@ test('render 1 installments with all fees and isMDRzao enabled', () => {
   const {
     container,
     getByText,
-  } = render(<FeesDetails fees={fees} t={identity} isMDRzao />)
+  } = render(<FeesDetails fees={fees} t={identity} isMDRzao isPixEnabled />)
 
   getByText(/fees.mdrzao_installment/)
   getByText(/fees.per_transaction/)
@@ -66,7 +66,7 @@ test('render no installments are provided', () => {
   const {
     container,
     queryByText,
-  } = render(<FeesDetails fees={fees} t={identity} />)
+  } = render(<FeesDetails fees={fees} t={identity} isPixEnabled />)
 
   expect(queryByText(/fees.one_installment/)).toBe(null)
   expect(queryByText(/fees.two_to_six_installments/)).toBe(null)

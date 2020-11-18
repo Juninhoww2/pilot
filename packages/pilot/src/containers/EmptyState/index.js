@@ -20,6 +20,7 @@ const EmptyState = ({
   fees,
   isAdmin,
   isMDRzao,
+  isPixEnabled,
   onDisableWelcome,
   onboardingAnswers,
   t,
@@ -50,7 +51,12 @@ const EmptyState = ({
         <Flexbox className={styles.accountInfo}>
           <AccessDocs t={t} onboardingAnswers={onboardingAnswers} />
           <AccessWelcomeMaterial t={t} />
-          <Fees isMDRzao={isMDRzao} fees={fees} t={t} />
+          <Fees
+            fees={fees}
+            isMDRzao={isMDRzao}
+            isPixEnabled={isPixEnabled}
+            t={t}
+          />
           { isAdmin
             && (
               <AccessKeys
@@ -84,6 +90,7 @@ EmptyState.propTypes = {
   }),
   isAdmin: PropTypes.bool,
   isMDRzao: PropTypes.bool.isRequired,
+  isPixEnabled: PropTypes.bool.isRequired,
   onboardingAnswers: PropTypes.objectOf(PropTypes.string),
   onDisableWelcome: PropTypes.func,
   t: PropTypes.func.isRequired,

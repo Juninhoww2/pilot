@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import {
   applySpec,
   compose,
+  contains,
   defaultTo,
   find,
   head,
@@ -20,7 +21,10 @@ import {
 } from 'ramda'
 import { translate } from 'react-i18next'
 
-import { requestLogout } from '../Account/actions/actions'
+import {
+  requestLogout,
+  getAcquirersRequest as getAcquirersRequestAction,
+} from '../Account/actions/actions'
 import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
 import isCompanyPaymentLink from '../../validation/isPaymentLink'
@@ -29,9 +33,14 @@ import { selectCompanyFees, selectAnticipationType } from '../Account/actions/re
 
 const mapStateToProps = ({
   account: {
-    client, company, defaultRecipient, user,
+    acquirers,
+    client,
+    company,
+    defaultRecipient,
+    user,
   },
 }) => ({
+  acquirers,
   anticipationType: selectAnticipationType({ company, defaultRecipient }),
   client,
   company,
@@ -40,6 +49,7 @@ const mapStateToProps = ({
 })
 
 const mapDispatchToProp = ({
+  getAcquirersRequest: getAcquirersRequestAction,
   requestLogout,
 })
 
@@ -128,6 +138,7 @@ class CompanySettingsPage extends React.Component {
   getInitialState () {
     const {
       client,
+      getAcquirersRequest,
       requestLogout: redirectoToLogout,
       t,
     } = this.props
@@ -151,6 +162,8 @@ class CompanySettingsPage extends React.Component {
       path(['antifraud', environment]),
       pick(['fraud_covered'])
     )
+
+    getAcquirersRequest()
 
     getCurrentCompany(client)
       .then(applySpec({
@@ -316,6 +329,7 @@ class CompanySettingsPage extends React.Component {
 
   render () {
     const {
+      acquirers,
       anticipationType,
       company,
       fees,
@@ -333,6 +347,13 @@ class CompanySettingsPage extends React.Component {
       versions,
     } = this.state
 
+    const isPixEnabled = !!find(
+      pipe(
+        propOr([], 'payment_methods'),
+        contains('pix')
+      )
+    )(acquirers)
+
     return (
       <CompanySettings
         antifraud={antifraud}
@@ -347,6 +368,7 @@ class CompanySettingsPage extends React.Component {
         environment={environment}
         fees={fees}
         isMDRzao={anticipationType === 'compulsory'}
+        isPixEnabled={isPixEnabled}
         onBoletoSettingsCancel={this.handleBoletoCancel}
         onBoletoSettingsChange={this.handleBoletoChange}
         onBoletoSettingsSubmit={this.handleBoletoSubmit}
@@ -360,6 +382,7 @@ class CompanySettingsPage extends React.Component {
 }
 
 CompanySettingsPage.propTypes = {
+  acquirers: PropTypes.arrayOf(PropTypes.shape()),
   anticipationType: PropTypes.string,
   client: PropTypes.shape({
     company: PropTypes.shape({
@@ -391,12 +414,14 @@ CompanySettingsPage.propTypes = {
     })),
     transfer: PropTypes.number,
   }),
+  getAcquirersRequest: PropTypes.func.isRequired,
   requestLogout: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({}),
 }
 
 CompanySettingsPage.defaultProps = {
+  acquirers: [],
   anticipationType: '',
   company: null,
   fees: {},

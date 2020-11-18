@@ -25,6 +25,7 @@ const EmptyStateExample = () => (
         transfer: 187,
       }}
       isMDRzao={false}
+      isPixEnabled={false}
       isAdmin
       t={t}
     />
@@ -48,6 +49,35 @@ const EmptyStateMDRzaoExample = () => (
         transfer: 187,
       }}
       isMDRzao
+      isPixEnabled={false}
+      isAdmin
+      t={t}
+    />
+  </Section>
+)
+
+const EmptyStatePixExample = () => (
+  <Section>
+    <EmptyState
+      apiKey="api-key"
+      encryptionKey="encryption-key"
+      environment="live"
+      fees={{
+        anticipation: 1.99,
+        antifraud: 70,
+        boleto: 380,
+        gateway: undefined,
+        installments: [
+          { installment: 1, mdr: 1.2 },
+        ],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
+        transfer: 187,
+      }}
+      isMDRzao
+      isPixEnabled
       isAdmin
       t={t}
     />
@@ -57,4 +87,5 @@ const EmptyStateMDRzaoExample = () => (
 export default {
   EmptyStateDefault: EmptyStateExample,
   EmptyStateMDRzao: EmptyStateMDRzaoExample,
+  EmptyStatePix: EmptyStatePixExample,
 }

@@ -103,6 +103,7 @@ storiesOf('Components|Custom components/FeesDetails', module)
   .addDecorator(withA11y)
   .add('Default', () => <FeesDetails.FeesDetailsDefault />)
   .add('MDRzao', () => <FeesDetails.FeesDetailsMDRzao />)
+  .add('Pix', () => <FeesDetails.FeesDetailsPix />)
 
 storiesOf('Components|Custom components/Alert', module)
   .add('Inactive Status', () => <Alert.InactiveStatus />)

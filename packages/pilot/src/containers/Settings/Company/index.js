@@ -28,6 +28,7 @@ const CompanySettings = ({
   environment,
   fees,
   isMDRzao,
+  isPixEnabled,
   onBoletoSettingsCancel,
   onBoletoSettingsChange,
   onBoletoSettingsSubmit,
@@ -75,6 +76,7 @@ const CompanySettings = ({
             <FeesTab
               fees={fees}
               isMDRzao={isMDRzao}
+              isPixEnabled={isPixEnabled}
               t={t}
             />
           )
@@ -153,6 +155,7 @@ CompanySettings.propTypes = {
     transfer: PropTypes.number,
   }).isRequired,
   isMDRzao: PropTypes.bool.isRequired,
+  isPixEnabled: PropTypes.bool.isRequired,
   onBoletoSettingsCancel: PropTypes.func.isRequired,
   onBoletoSettingsChange: PropTypes.func.isRequired,
   onBoletoSettingsSubmit: PropTypes.func.isRequired,

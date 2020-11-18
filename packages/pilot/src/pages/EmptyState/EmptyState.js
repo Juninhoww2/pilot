@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   applySpec,
   compose,
+  contains,
+  find,
   head,
   path,
   propOr,
@@ -17,6 +19,7 @@ import EmptyStateContainer from '../../containers/EmptyState'
 import { withError } from '../ErrorBoundary'
 import environment from '../../environment'
 
+import { getAcquirersRequest as getAcquirersRequestAction } from '../Account/actions/actions'
 import { selectCompanyFees, selectAnticipationType } from '../Account/actions/reducer'
 
 const getUserName = pipe(prop('name'), split(' '), head)
@@ -32,6 +35,7 @@ const getAlreadyTransacted = propOr(true, 'alreadyTransacted')
 
 const mapStateToProps = ({
   account: {
+    acquirers,
     company,
     defaultRecipient,
     user,
@@ -41,6 +45,7 @@ const mapStateToProps = ({
   },
 }) => ({
   accessKeys: getAccessKeys(company),
+  acquirers,
   alreadyTransacted: getAlreadyTransacted(company),
   anticipationType: selectAnticipationType({ company, defaultRecipient }),
   company,
@@ -50,9 +55,16 @@ const mapStateToProps = ({
   userName: getUserName(user),
 })
 
+const mapDispatchToProp = ({
+  getAcquirersRequest: getAcquirersRequestAction,
+})
+
 const enhanced = compose(
   translate(),
-  connect(mapStateToProps, null),
+  connect(
+    mapStateToProps,
+    mapDispatchToProp
+  ),
   withError
 )
 
@@ -63,8 +75,10 @@ const hideEmptyState = push => () => {
 
 const EmptyState = ({
   accessKeys,
+  acquirers,
   anticipationType,
   fees,
+  getAcquirersRequest,
   history: {
     push,
   },
@@ -72,26 +86,41 @@ const EmptyState = ({
   onboardingAnswers,
   t,
   userName,
-}) => (
-  <EmptyStateContainer
-    apiKey={accessKeys.apiKey}
-    encryptionKey={accessKeys.encryptionKey}
-    environment={environment}
-    fees={fees}
-    isAdmin={isAdmin}
-    isMDRzao={anticipationType === 'compulsory'}
-    onboardingAnswers={onboardingAnswers}
-    onDisableWelcome={hideEmptyState(push)}
-    t={t}
-    userName={userName}
-  />
-)
+}) => {
+  useEffect(() => {
+    getAcquirersRequest()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const isPixEnabled = !!find(
+    pipe(
+      propOr([], 'payment_methods'),
+      contains('pix')
+    )
+  )(acquirers)
+
+  return (
+    <EmptyStateContainer
+      apiKey={accessKeys.apiKey}
+      encryptionKey={accessKeys.encryptionKey}
+      environment={environment}
+      fees={fees}
+      isAdmin={isAdmin}
+      isMDRzao={anticipationType === 'compulsory'}
+      isPixEnabled={isPixEnabled}
+      onboardingAnswers={onboardingAnswers}
+      onDisableWelcome={hideEmptyState(push)}
+      t={t}
+      userName={userName}
+    />
+  )
+}
 
 EmptyState.propTypes = {
   accessKeys: PropTypes.shape({
     apiKey: PropTypes.string,
     encryptionKey: PropTypes.string,
   }),
+  acquirers: PropTypes.arrayOf(PropTypes.shape()),
   anticipationType: PropTypes.string,
   fees: PropTypes.shape({
     anticipation: PropTypes.number,
@@ -104,6 +133,7 @@ EmptyState.propTypes = {
     })),
     transfer: PropTypes.number,
   }),
+  getAcquirersRequest: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -115,6 +145,7 @@ EmptyState.propTypes = {
 
 EmptyState.defaultProps = {
   accessKeys: {},
+  acquirers: [],
   anticipationType: '',
   fees: {},
   onboardingAnswers: undefined,
