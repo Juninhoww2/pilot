@@ -15,6 +15,7 @@ const types = {
   installment: 'models.operations.installment',
   inter_recipient: 'models.operations.inter_recipient',
   mdr: 'models.operations.mdr',
+  pix: 'models.operations.pix',
   refund: 'models.operations.refund',
   refund_reversal: 'models.operations.refund_reversal',
   refund_reversal_description: 'models.operations.refund_reversal_description',
