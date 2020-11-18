@@ -467,6 +467,7 @@ storiesOf('Containers|Page containers', module)
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)
   .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)
+  .add('Pix', () => <EmptyState.EmptyStatePix />)
 
 storiesOf('Containers|Payment Links/List/Filter', module)
   .add('Filter', () => <PaymentLinks.List.Filter />)
@@ -514,10 +515,6 @@ storiesOf('Containers|Payment Links/Details/PaymentMethods', module)
   .add('WithInterestRate', () => <PaymentLinks.Details.PaymentMethods.WithInterestRate />)
   .add('WithoutInterestRate', () => <PaymentLinks.Details.PaymentMethods.WithoutInterestRate />)
   .add('WithChargeTransactionFee', () => <PaymentLinks.Details.PaymentMethods.WithChargeTransactionFee />)
-
-storiesOf('Containers|Empty State', module)
-  .add('Default', () => <EmptyState.EmptyStateDefault />)
-  .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)
 
 storiesOf('Containers|Choose Dashboard/Card')
   .add('Legacy Dashboard', () => <ChooseDashboard.Card.LegacyDashboardCard />)

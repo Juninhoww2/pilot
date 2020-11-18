@@ -53,7 +53,32 @@ const FeesDetailsMDRzaoExample = () => (
   </Section>
 )
 
+const FeesDetailsPixExample = () => (
+  <Section>
+    <FeesDetails
+      fees={{
+        anticipation: 1.99,
+        antifraud: 70,
+        boleto: 380,
+        gateway: undefined,
+        installments: [
+          { installment: 1, mdr: 1.2 },
+        ],
+        pix: {
+          paymentFixedFee: 380,
+          paymentSpreadFee: 1.19,
+        },
+        transfer: 187,
+      }}
+      isMDRzao
+      isPixEnabled
+      t={t}
+    />
+  </Section>
+)
+
 export default {
   FeesDetailsDefault: FeesDetailsDefaultExample,
   FeesDetailsMDRzao: FeesDetailsMDRzaoExample,
+  FeesDetailsPix: FeesDetailsPixExample,
 }

@@ -12,12 +12,18 @@ import FeesDetails from '../../../../components/FeesDetails'
 const Pricing = ({
   fees,
   isMDRzao,
+  isPixEnabled,
   t,
 }) => (
   <Card>
     <CardTitle title={t('pages.settings.company.card.general.title.rate')} />
     <CardContent>
-      <FeesDetails isMDRzao={isMDRzao} fees={fees} t={t} />
+      <FeesDetails
+        fees={fees}
+        isMDRzao={isMDRzao}
+        isPixEnabled={isPixEnabled}
+        t={t}
+      />
     </CardContent>
   </Card>
 )
@@ -35,6 +41,7 @@ Pricing.propTypes = {
     transfer: PropTypes.number,
   }).isRequired,
   isMDRzao: PropTypes.bool.isRequired,
+  isPixEnabled: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 }
 
