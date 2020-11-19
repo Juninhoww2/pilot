@@ -588,6 +588,7 @@
       "outgoing": "saídas",
       "payment_date": "data",
       "refund": "Estorno",
+      "pix": "Pix",
       "refund_reversal": "Devolução de Estorno",
       "refund_reversal_description": "Devolução de estorno por falha na transferência",
       "to": "Para",
