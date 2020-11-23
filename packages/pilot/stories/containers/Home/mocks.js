@@ -251,9 +251,29 @@ const conversions = [
   },
 ]
 
+const conversionsWithPix = [
+  {
+    label: 'Real',
+    value: 70,
+  },
+  {
+    label: 'Sem retentativas',
+    value: 100,
+  },
+  {
+    label: 'Boletos',
+    value: 50,
+  },
+  {
+    label: 'Pix',
+    value: 30,
+  },
+]
+
 export {
   cardBrands,
   conversions,
+  conversionsWithPix,
   paymentMethods,
   presets,
   refuseReasons,

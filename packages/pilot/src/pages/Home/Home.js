@@ -13,6 +13,7 @@ import {
   anyPass,
   applySpec,
   compose,
+  contains,
   equals,
   filter,
   find,
@@ -45,7 +46,6 @@ import {
   uncurryN,
   unless,
   values,
-  when,
 } from 'ramda'
 import {
   Flexbox,
@@ -54,7 +54,10 @@ import {
   requestConversion as requestConversionAction,
   requestMetrics as requestMetricsAction,
 } from './actions'
-import { requestLogout } from '../Account/actions/actions'
+import {
+  requestLogout,
+  getAcquirersRequest as getAcquirersRequestAction,
+} from '../Account/actions/actions'
 import { withError } from '../ErrorBoundary'
 import creditCardBrands from '../../models/creditcardBrands'
 import dateInputPresets from '../../models/dateSelectorPresets'
@@ -72,6 +75,7 @@ import GenericErrorIcon from '../Errors/GenericError/Icon.svg'
 
 const mapStateToProps = ({
   account: {
+    acquirers,
     company,
     user,
   },
@@ -81,6 +85,7 @@ const mapStateToProps = ({
     metrics,
   },
 }) => ({
+  acquirers,
   company,
   conversion,
   loading,
@@ -89,6 +94,7 @@ const mapStateToProps = ({
 })
 
 const mapDispatchToProps = {
+  getAcquirersRequest: getAcquirersRequestAction,
   logout: requestLogout,
   requestConversion: requestConversionAction,
   requestMetrics: requestMetricsAction,
@@ -419,8 +425,8 @@ const enhanceConversion = (label, conversionPath) => applySpec({
   value: pathOr(0, conversionPath),
 })
 
-const getConversions = uncurryN(2, t => pipe(
-  juxt([
+const getConversions = (t, conversion, isPixEnabled) => {
+  const res = juxt([
     enhanceConversion(
       t('pages.home.conversion.real'),
       ['card', 'conversion']
@@ -433,16 +439,17 @@ const getConversions = uncurryN(2, t => pipe(
       t('pages.home.conversion.boleto'),
       ['boleto', 'conversion']
     ),
-    enhanceConversion(
+  ])(conversion)
+
+  if (isPixEnabled) {
+    res.push(enhanceConversion(
       t('pages.home.conversion.pix'),
       ['pix', 'conversion']
-    ),
-  ]),
-  when(
-    isNilOrEmpty,
-    always([])
-  )
-))
+    )(conversion))
+  }
+
+  return res
+}
 
 const userNotHidEmptyState = () => isNilOrEmpty(localStorage.getItem('hide_empty-state'))
 
@@ -454,9 +461,11 @@ const isGlobalLoading = pipe(
 )
 
 const Home = ({
+  acquirers,
   company,
   conversion,
   error,
+  getAcquirersRequest,
   history: {
     location: {
       search,
@@ -473,6 +482,7 @@ const Home = ({
   const initialSearchDates = getDatesFromUrl(search)
   const [dates, setDates] = useState(search ? initialSearchDates : defaultDates)
   const [preset, setPreset] = useState(defaultPreset)
+  const [isPixEnabled, setIsPixEnabled] = useState(false)
 
   const handleDatesChange = (datesRange) => {
     setDates(datesRange)
@@ -519,6 +529,19 @@ const Home = ({
       replace('/welcome')
     }
   }, [company, replace, user])
+
+  useEffect(() => {
+    getAcquirersRequest()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setIsPixEnabled(!!find(
+      pipe(
+        propOr([], 'payment_methods'),
+        contains('pix')
+      )
+    )(acquirers))
+  }, [acquirers])
   /* End effects */
 
   const {
@@ -555,7 +578,7 @@ const Home = ({
     <HomeContainer
       averageAmount={averageAmount}
       cardBrands={enhanceIndicators(t, cardBrands)}
-      conversions={getConversions(t, conversion)}
+      conversions={getConversions(t, conversion, isPixEnabled)}
       dates={dates}
       isEmptySearch={verifyEmptyMetrics(metrics || {})}
       labels={{
@@ -596,6 +619,7 @@ const graphicDataShape = PropTypes.shape({
 })
 
 Home.propTypes = {
+  acquirers: PropTypes.arrayOf(PropTypes.shape()),
   company: PropTypes.shape({
     alreadyTransacted: PropTypes.bool,
   }),
@@ -618,6 +642,7 @@ Home.propTypes = {
     }),
     message: PropTypes.string.isRequired,
   }),
+  getAcquirersRequest: PropTypes.func.isRequired,
   history: PropTypes.shape({
     location: PropTypes.shape({
       search: PropTypes.string,
@@ -648,6 +673,7 @@ Home.propTypes = {
 }
 
 Home.defaultProps = {
+  acquirers: [],
   company: {},
   conversion: {
     boleto: {},
