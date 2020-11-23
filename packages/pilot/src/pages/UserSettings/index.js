@@ -140,6 +140,10 @@ class UserSettingsPage extends React.Component {
     this.handleAccountChange = this.handleAccountChange.bind(this)
     this.handleAccountCreate = this.handleAccountCreate.bind(this)
     this.handleAccountSelect = this.handleAccountSelect.bind(this)
+    this.handleCompanyAddressSubmit = this.handleCompanyAddressSubmit.bind(this)
+    this.handleCompanyInfoSubmit = this.handleCompanyInfoSubmit.bind(this)
+    this.handleCompanyAddressChange = this.handleCompanyAddressChange.bind(this)
+    this.handleCompanyInfoChange = this.handleCompanyInfoChange.bind(this)
     this.handleCreateUser = this.handleCreateUser.bind(this)
     this.handleDeleteUser = this.handleDeleteUser.bind(this)
     this.handleRedefinePassword = this.handleRedefinePassword.bind(this)
@@ -217,6 +221,72 @@ class UserSettingsPage extends React.Component {
           legalName: bankAccount.data.legalName,
         },
         errors: defaultBankAccountErrorsState,
+      },
+    })
+  }
+
+  handleCompanyAddressSubmit (data) {
+    const { client, requestLogout: redirectoToLogout } = this.props
+    const { companyInfo } = this.state
+
+    return client
+      .company.update({
+        address: data,
+      })
+      .then(({ address: companyAddress }) => this.setState({
+        companyInfo: {
+          ...companyInfo,
+          address: companyAddress,
+        },
+      }))
+      .catch(redirectoToLogout)
+  }
+
+  handleCompanyInfoSubmit ({ name }) {
+    const { client, requestLogout: redirectoToLogout } = this.props
+    const { companyInfo } = this.state
+    const { general } = companyInfo
+
+    return client
+      .company.update({ name })
+      .then(({ name: companyName }) => this.state({
+        companyInfo: {
+          ...companyInfo,
+          general: {
+            ...general,
+            companyName,
+          },
+        },
+      }))
+      .catch(redirectoToLogout)
+  }
+
+  handleCompanyAddressChange (data) {
+    const { companyInfo } = this.state
+    const { address } = companyInfo
+
+    this.setState({
+      companyInfo: {
+        ...companyInfo,
+        address: {
+          ...address,
+          ...data,
+        },
+      },
+    })
+  }
+
+  handleCompanyInfoChange (data) {
+    const { companyInfo } = this.state
+    const { general } = companyInfo
+
+    this.setState({
+      companyInfo: {
+        ...companyInfo,
+        general: {
+          ...general,
+          ...data,
+        },
       },
     })
   }
@@ -423,6 +493,10 @@ class UserSettingsPage extends React.Component {
         deleteUserStatus={deleteUserStatus}
         general={general}
         managingPartner={managingPartner}
+        onCompanyAddressChange={this.handleCompanyAddressChange}
+        onCompanyInfoChange={this.handleCompanyInfoChange}
+        onCompanyAddressSubmit={this.handleCompanyAddressSubmit}
+        onCompanyInfoSubmit={this.handleCompanyInfoSubmit}
         onBankAccountCancel={this.handleAccountCancel}
         onBankAccountChange={this.handleAccountChange}
         onBankAccountCreate={this.handleAccountCreate}
