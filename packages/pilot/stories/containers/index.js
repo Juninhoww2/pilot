@@ -463,6 +463,9 @@ storiesOf('Containers|Page containers', module)
   .add('Home', () => (
     <Home />
   ))
+  .add('Home with Pix enabled', () => (
+    <Home isPixEnabled />
+  ))
 
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)

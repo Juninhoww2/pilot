@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   assoc,
   identity,
@@ -14,6 +15,7 @@ import HomeContainer from '../../../src/containers/Home'
 import {
   cardBrands,
   conversions,
+  conversionsWithPix,
   paymentMethods,
   presets,
   refuseReasons,
@@ -85,6 +87,10 @@ class HomeContainerExample extends Component {
       selectedPreset,
     } = this.state
 
+    const {
+      isPixEnabled,
+    } = this.props
+
     const dateFormat = date => date.format('L')
 
     return (
@@ -92,7 +98,7 @@ class HomeContainerExample extends Component {
         <HomeContainer
           averageAmount={25000}
           cardBrands={cardBrands}
-          conversions={conversions}
+          conversions={isPixEnabled ? conversionsWithPix : conversions}
           dates={dates}
           labels={{
             description: `Aqui está o resumo geral da sua conta entre ${dateFormat(dates.start)} à ${dateFormat(dates.end)}`,
@@ -115,6 +121,14 @@ class HomeContainerExample extends Component {
       </Section>
     )
   }
+}
+
+HomeContainerExample.propTypes = {
+  isPixEnabled: PropTypes.bool,
+}
+
+HomeContainerExample.defaultProps = {
+  isPixEnabled: false,
 }
 
 export default HomeContainerExample
